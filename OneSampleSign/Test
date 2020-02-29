@@ -1,0 +1,40 @@
+library(foreign)
+library(rio)
+library(haven)
+library(distributions3)
+dt=read.spss("MCSSessionNonPara.sav",to.data.frame=TRUE)
+
+head(dt)
+library(BSDA)
+class(dt$bweight)
+dt$bweight=as.numeric(as.character(dt$bweight))
+
+#command to do one sample sign test in R
+SIGN.test(dt$bweight, md = 3.38)
+str(dt)
+
+dt$sign=0
+#checking number of records with + sign i.e bweight > 3.38
+dt$sign[dt$bweight>3.38]=1
+table(dt$sign)
+
+#finding records which do not have bweight = 3.38.
+#essential to do before we compute probability using binomial distribution
+n=sum(dt$bweight!=3.38, na.rm=TRUE)
+n
+#computing probability using Binomial distribution to cross
+# check with Sign test result
+X <- Binomial(n, 0.5)
+b=970
+2 * min(cdf(X, b))
+
+#Inherent function in R for binomial distribution
+binom.test(b, n = 1991, p = 0.5)
+binom.test(b, n = 1991, p = 0.5, alternative = "greater")
+binom.test(b, n = 1991, p = 0.5, alternative = "less")
+
+
+
+
+
+
