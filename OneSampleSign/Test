@@ -2,7 +2,7 @@ library(foreign)
 library(rio)
 library(haven)
 library(distributions3)
-dt=read.spss("MCSSessionNonPara.sav",to.data.frame=TRUE)
+dt=read.csv("bweight.csv") #Input your file
 
 head(dt)
 library(BSDA)
