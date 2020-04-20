@@ -1,0 +1,488 @@
+
+___________________________________________________________________
+This file shows step-by-step models created to arrive at the final model.
+Single variables are added step-by-step and variables with high p-values are removed and the model is re-run.
+Data can be shared on request from the fellow researchers.
+___________________________________________________________________
+Creator: Yesoda Bhargava
+Address: University of York, UK
+Date: 19 April 2020
+Correspondence: yesodabhargava@gmail.com
+___________________________________________________________________
+Variable details
+___________________________________________________________________
+ AGE: AG3 = [35-44], AG4 =[45-54], AG5 =[55-64], AG6 > 65
+ SEX : 1=MALE, 2=FEMALE.
+ RACE: 1=WHITE, 2=BLACK, 3=HISPANIC
+ WLV100: Weekly weight lifting volume in minutes divided by 100
+ BMI range 18.5 to 40
+ DIABETES: 1=YES, 0=NO.
+___________________________________________________________________
+
+						STEP BY STEP LOGISTIC REGRESSION MODELLING
+===================================================================
+MODEL 1
+===================================================================
+
+Call:
+glm(formula = DIABETES ~ AGE, family = "binomial", data = g2)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-0.5914  -0.4376  -0.3208  -0.2340   2.6875  
+
+Coefficients:
+            Estimate Std. Error z value            Pr(>|z|)    
+(Intercept) -5.51327    0.06427  -85.78 <0.0000000000000002 ***
+AGE          0.64307    0.01220   52.72 <0.0000000000000002 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 57790  on 98158  degrees of freedom
+Residual deviance: 54544  on 98157  degrees of freedom
+AIC: 54548
+
+Number of Fisher Scoring iterations: 6
+
+
+===================================================================
+MODEL 2
+===================================================================
+
+Call:
+glm(formula = DIABETES ~ AGE + SEX, family = "binomial", data = g2)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-0.6296  -0.4674  -0.3435  -0.2510   2.7473  
+
+Coefficients:
+            Estimate Std. Error z value            Pr(>|z|)    
+(Intercept) -5.36572    0.06504  -82.50 <0.0000000000000002 ***
+AGE          0.64133    0.01220   52.58 <0.0000000000000002 ***
+SEX2        -0.30894    0.02343  -13.19 <0.0000000000000002 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 57790  on 98158  degrees of freedom
+Residual deviance: 54368  on 98156  degrees of freedom
+AIC: 54374
+
+Number of Fisher Scoring iterations: 6
+
+
+===================================================================
+MODEL 3
+===================================================================
+
+Call:
+glm(formula = DIABETES ~ AGE + SEX + AGE * SEX, family = "binomial", 
+    data = g2)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-0.6296  -0.4674  -0.3436  -0.2511   2.7475  
+
+Coefficients:
+              Estimate Std. Error z value            Pr(>|z|)    
+(Intercept) -5.3651251  0.0840660 -63.820 <0.0000000000000002 ***
+AGE          0.6412119  0.0159453  40.213 <0.0000000000000002 ***
+SEX2        -0.3103602  0.1303954  -2.380              0.0173 *  
+AGE:SEX2     0.0002743  0.0247543   0.011              0.9912    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 57790  on 98158  degrees of freedom
+Residual deviance: 54368  on 98155  degrees of freedom
+AIC: 54376
+
+Number of Fisher Scoring iterations: 6
+
+
+===================================================================
+MODEL 4
+===================================================================
+
+Call:
+glm(formula = DIABETES ~ AGE + SEX + BMI, family = "binomial", 
+    data = g2)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.3416  -0.4573  -0.3140  -0.2040   3.2428  
+
+Coefficients:
+              Estimate Std. Error z value             Pr(>|z|)    
+(Intercept) -10.123988   0.107946 -93.787 < 0.0000000000000002 ***
+AGE           0.686698   0.012690  54.113 < 0.0000000000000002 ***
+SEX2         -0.173889   0.024143  -7.202    0.000000000000592 ***
+BMI           0.160068   0.002635  60.754 < 0.0000000000000002 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 57790  on 98158  degrees of freedom
+Residual deviance: 50630  on 98155  degrees of freedom
+AIC: 50638
+
+Number of Fisher Scoring iterations: 6
+
+
+===================================================================
+MODEL 5
+===================================================================
+
+Call:
+glm(formula = DIABETES ~ AGE + SEX + BMI + AGE * BMI + BMI * 
+    SEX, family = "binomial", data = g2)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.2789  -0.4636  -0.3150  -0.1975   3.3270  
+
+Coefficients:
+              Estimate Std. Error z value             Pr(>|z|)    
+(Intercept) -11.111962   0.427660 -25.983 < 0.0000000000000002 ***
+AGE           0.930991   0.080454  11.572 < 0.0000000000000002 ***
+SEX2         -0.691775   0.153224  -4.515           0.00000634 ***
+BMI           0.193911   0.014239  13.618 < 0.0000000000000002 ***
+AGE:BMI      -0.008411   0.002704  -3.111             0.001867 ** 
+SEX2:BMI      0.017928   0.005216   3.437             0.000588 ***
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 57790  on 98158  degrees of freedom
+Residual deviance: 50608  on 98153  degrees of freedom
+AIC: 50620
+
+Number of Fisher Scoring iterations: 6
+
+
+===================================================================
+MODEL 6
+===================================================================
+
+Call:
+glm(formula = DIABETES ~ AGE + SEX + BMI + AGE * BMI + BMI * 
+    SEX + RACE, family = "binomial", data = g2)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.5611  -0.4578  -0.3082  -0.1897   3.3560  
+
+Coefficients:
+              Estimate Std. Error z value             Pr(>|z|)    
+(Intercept) -10.985716   0.431292 -25.472 < 0.0000000000000002 ***
+AGE           0.904419   0.081144  11.146 < 0.0000000000000002 ***
+SEX2         -0.623407   0.154569  -4.033             0.000055 ***
+BMI           0.178860   0.014385  12.434 < 0.0000000000000002 ***
+RACE2         0.812375   0.038458  21.124 < 0.0000000000000002 ***
+RACE5         0.775580   0.046271  16.762 < 0.0000000000000002 ***
+AGE:BMI      -0.006184   0.002731  -2.264              0.02355 *  
+SEX2:BMI      0.014918   0.005267   2.832              0.00462 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 57790  on 98158  degrees of freedom
+Residual deviance: 50010  on 98151  degrees of freedom
+AIC: 50026
+
+Number of Fisher Scoring iterations: 6
+
+
+===================================================================
+MODEL 7
+===================================================================
+
+Call:
+glm(formula = DIABETES ~ AGE + SEX + BMI + AGE * BMI + BMI * 
+    SEX + RACE + RACE * AGE + RACE * SEX + RACE * BMI, family = "binomial", 
+    data = g2)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.4834  -0.4578  -0.3059  -0.1877   3.3992  
+
+Coefficients:
+              Estimate Std. Error z value             Pr(>|z|)    
+(Intercept) -11.657057   0.443876 -26.262 < 0.0000000000000002 ***
+AGE           0.981684   0.082441  11.908 < 0.0000000000000002 ***
+SEX2         -0.654974   0.155173  -4.221   0.0000243302444230 ***
+BMI           0.205540   0.014747  13.938 < 0.0000000000000002 ***
+RACE2         2.612938   0.347962   7.509   0.0000000000000595 ***
+RACE5         1.256911   0.410240   3.064             0.002185 ** 
+AGE:BMI      -0.009495   0.002765  -3.434             0.000594 ***
+SEX2:BMI      0.015586   0.005279   2.953             0.003150 ** 
+AGE:RACE2     0.069014   0.039664   1.740             0.081869 .  
+AGE:RACE5     0.069286   0.044557   1.555             0.119943    
+SEX2:RACE2    0.137421   0.075636   1.817             0.069237 .  
+SEX2:RACE5    0.023127   0.094079   0.246             0.805813    
+BMI:RACE2    -0.074633   0.008506  -8.774 < 0.0000000000000002 ***
+BMI:RACE5    -0.028434   0.010613  -2.679             0.007383 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 57790  on 98158  degrees of freedom
+Residual deviance: 49915  on 98145  degrees of freedom
+AIC: 49943
+
+Number of Fisher Scoring iterations: 6
+
+
+===================================================================
+MODEL 8
+===================================================================
+
+Call:
+glm(formula = DIABETES ~ AGE + SEX + BMI + AGE * BMI + BMI * 
+    SEX + RACE + RACE * BMI, family = "binomial", data = g2)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.4410  -0.4598  -0.3062  -0.1852   3.4081  
+
+Coefficients:
+              Estimate Std. Error z value             Pr(>|z|)    
+(Intercept) -11.755845   0.443499 -26.507 < 0.0000000000000002 ***
+AGE           0.997173   0.082295  12.117 < 0.0000000000000002 ***
+SEX2         -0.644864   0.154858  -4.164         0.0000312404 ***
+BMI           0.205812   0.014789  13.916 < 0.0000000000000002 ***
+RACE2         3.079375   0.248145  12.410 < 0.0000000000000002 ***
+RACE5         1.684437   0.305708   5.510         0.0000000359 ***
+AGE:BMI      -0.009482   0.002767  -3.426             0.000612 ***
+SEX2:BMI      0.015904   0.005271   3.017             0.002550 ** 
+BMI:RACE2    -0.076409   0.008336  -9.167 < 0.0000000000000002 ***
+BMI:RACE5    -0.031302   0.010382  -3.015             0.002570 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 57790  on 98158  degrees of freedom
+Residual deviance: 49924  on 98149  degrees of freedom
+AIC: 49944
+
+Number of Fisher Scoring iterations: 6
+
+
+===================================================================
+MODEL 9
+===================================================================
+
+Call:
+glm(formula = DIABETES ~ AGE + SEX + BMI + AGE * BMI + BMI * 
+    SEX + RACE + RACE * BMI + WLV100, family = "binomial", data = g2)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.4325  -0.4584  -0.3053  -0.1846   3.4086  
+
+Coefficients:
+              Estimate Std. Error z value             Pr(>|z|)    
+(Intercept) -11.714454   0.443498 -26.414 < 0.0000000000000002 ***
+AGE           1.006096   0.082307  12.224 < 0.0000000000000002 ***
+SEX2         -0.637703   0.154922  -4.116         0.0000385014 ***
+BMI           0.208584   0.014793  14.100 < 0.0000000000000002 ***
+RACE2         3.056751   0.248315  12.310 < 0.0000000000000002 ***
+RACE5         1.700471   0.305751   5.562         0.0000000267 ***
+WLV100       -0.131316   0.015180  -8.651 < 0.0000000000000002 ***
+AGE:BMI      -0.010089   0.002768  -3.645             0.000268 ***
+SEX2:BMI      0.014286   0.005276   2.708             0.006774 ** 
+BMI:RACE2    -0.075488   0.008342  -9.050 < 0.0000000000000002 ***
+BMI:RACE5    -0.031614   0.010383  -3.045             0.002329 ** 
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 57790  on 98158  degrees of freedom
+Residual deviance: 49844  on 98148  degrees of freedom
+AIC: 49866
+
+Number of Fisher Scoring iterations: 6
+
+
+===================================================================
+MODEL 10
+===================================================================
+
+Call:
+glm(formula = DIABETES ~ AGE + SEX + BMI + AGE * BMI + BMI * 
+    SEX + RACE + RACE * BMI + WLV100 + WLV100 * AGE + WLV100 * 
+    SEX + WLV100 * BMI + WLV100 * RACE, family = "binomial", 
+    data = g2)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.4220  -0.4589  -0.3053  -0.1840   3.5011  
+
+Coefficients:
+               Estimate Std. Error z value             Pr(>|z|)    
+(Intercept)  -11.586450   0.451395 -25.668 < 0.0000000000000002 ***
+AGE            0.994477   0.082704  12.025 < 0.0000000000000002 ***
+SEX2          -0.626920   0.158979  -3.943         0.0000803341 ***
+BMI            0.204308   0.015010  13.612 < 0.0000000000000002 ***
+RACE2          3.085484   0.249061  12.388 < 0.0000000000000002 ***
+RACE5          1.740046   0.306660   5.674         0.0000000139 ***
+WLV100        -0.301931   0.139332  -2.167             0.030235 *  
+AGE:BMI       -0.009819   0.002771  -3.543             0.000395 ***
+SEX2:BMI       0.014946   0.005380   2.778             0.005467 ** 
+BMI:RACE2     -0.075666   0.008348  -9.064 < 0.0000000000000002 ***
+BMI:RACE5     -0.032058   0.010388  -3.086             0.002029 ** 
+AGE:WLV100     0.008060   0.014996   0.537             0.590941    
+SEX2:WLV100   -0.089599   0.038422  -2.332             0.019703 *  
+BMI:WLV100     0.005581   0.003472   1.607             0.107989    
+RACE2:WLV100  -0.058763   0.046275  -1.270             0.204138    
+RACE5:WLV100  -0.059193   0.051170  -1.157             0.247360    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 57790  on 98158  degrees of freedom
+Residual deviance: 49832  on 98143  degrees of freedom
+AIC: 49864
+
+Number of Fisher Scoring iterations: 6
+
+
+===================================================================
+MODEL 11
+===================================================================
+
+Call:
+glm(formula = DIABETES ~ AGE + SEX + BMI + AGE * BMI + BMI * 
+    SEX + RACE + RACE * BMI + WLV100 + SEX * WLV100 + CV100, 
+    family = "binomial", data = g2)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.4317  -0.4581  -0.3048  -0.1843   3.4689  
+
+Coefficients:
+              Estimate Std. Error z value             Pr(>|z|)    
+(Intercept) -11.660376   0.443965 -26.264 < 0.0000000000000002 ***
+AGE           1.008696   0.082316  12.254 < 0.0000000000000002 ***
+SEX2         -0.582860   0.156363  -3.728             0.000193 ***
+BMI           0.208166   0.014792  14.073 < 0.0000000000000002 ***
+RACE2         3.039994   0.248564  12.230 < 0.0000000000000002 ***
+RACE5         1.694749   0.305954   5.539     0.00000003038009 ***
+WLV100       -0.119278   0.017189  -6.939     0.00000000000394 ***
+CV100        -0.021638   0.007586  -2.852             0.004342 ** 
+AGE:BMI      -0.010158   0.002769  -3.669             0.000244 ***
+SEX2:BMI      0.013291   0.005287   2.514             0.011941 *  
+BMI:RACE2    -0.074963   0.008350  -8.977 < 0.0000000000000002 ***
+BMI:RACE5    -0.031358   0.010390  -3.018             0.002544 ** 
+SEX2:WLV100  -0.096257   0.038110  -2.526             0.011543 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 57790  on 98158  degrees of freedom
+Residual deviance: 49829  on 98146  degrees of freedom
+AIC: 49855
+
+Number of Fisher Scoring iterations: 6
+
+
+===================================================================
+MODEL 12
+===================================================================
+
+Call:
+glm(formula = DIABETES ~ AGE + SEX + BMI + AGE * BMI + BMI * 
+    SEX + RACE + RACE * BMI + WLV100 + SEX * WLV100 + CV100 + 
+    CV100 * AGE + CV100 * BMI + CV100 * SEX + CV100 * RACE, family = "binomial", 
+    data = g2)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.4346  -0.4582  -0.3046  -0.1834   3.4893  
+
+Coefficients:
+                Estimate   Std. Error z value             Pr(>|z|)    
+(Intercept) -12.36714347   0.48468361 -25.516 < 0.0000000000000002 ***
+AGE           1.14234010   0.08624059  13.246 < 0.0000000000000002 ***
+SEX2         -0.58816504   0.16538989  -3.556             0.000376 ***
+BMI           0.21453834   0.01546557  13.872 < 0.0000000000000002 ***
+RACE2         3.14332793   0.25616336  12.271 < 0.0000000000000002 ***
+RACE5         1.78651143   0.31570864   5.659      0.0000000152493 ***
+WLV100       -0.11710721   0.01733094  -6.757      0.0000000000141 ***
+CV100         0.20477718   0.06857111   2.986             0.002823 ** 
+AGE:BMI      -0.01137613   0.00278139  -4.090      0.0000431203149 ***
+SEX2:BMI      0.01334700   0.00531716   2.510             0.012067 *  
+BMI:RACE2    -0.07599649   0.00835582  -9.095 < 0.0000000000000002 ***
+BMI:RACE5    -0.03239992   0.01039274  -3.118             0.001824 ** 
+SEX2:WLV100  -0.09649564   0.03862949  -2.498             0.012490 *  
+AGE:CV100    -0.04284525   0.00800333  -5.353      0.0000000863035 ***
+BMI:CV100     0.00003878   0.00165483   0.023             0.981304    
+SEX2:CV100    0.00021197   0.01558087   0.014             0.989146    
+RACE2:CV100  -0.03194182   0.02282698  -1.399             0.161723    
+RACE5:CV100  -0.02592197   0.02707434  -0.957             0.338347    
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 57790  on 98158  degrees of freedom
+Residual deviance: 49800  on 98141  degrees of freedom
+AIC: 49836
+
+Number of Fisher Scoring iterations: 6
+
+
+===================================================================
+MODEL 13 = Final Model Obtained
+===================================================================
+
+Call:
+glm(formula = DIABETES ~ AGE + SEX + BMI + AGE * BMI + BMI * 
+    SEX + RACE + RACE * BMI + WLV100 + SEX * WLV100 + CV100, 
+    family = "binomial", data = g2)
+
+Deviance Residuals: 
+    Min       1Q   Median       3Q      Max  
+-1.4317  -0.4581  -0.3048  -0.1843   3.4689  
+
+Coefficients:
+              Estimate Std. Error z value             Pr(>|z|)    
+(Intercept) -11.660376   0.443965 -26.264 < 0.0000000000000002 ***
+AGE           1.008696   0.082316  12.254 < 0.0000000000000002 ***
+SEX2         -0.582860   0.156363  -3.728             0.000193 ***
+BMI           0.208166   0.014792  14.073 < 0.0000000000000002 ***
+RACE2         3.039994   0.248564  12.230 < 0.0000000000000002 ***
+RACE5         1.694749   0.305954   5.539     0.00000003038009 ***
+WLV100       -0.119278   0.017189  -6.939     0.00000000000394 ***
+CV100        -0.021638   0.007586  -2.852             0.004342 ** 
+AGE:BMI      -0.010158   0.002769  -3.669             0.000244 ***
+SEX2:BMI      0.013291   0.005287   2.514             0.011941 *  
+BMI:RACE2    -0.074963   0.008350  -8.977 < 0.0000000000000002 ***
+BMI:RACE5    -0.031358   0.010390  -3.018             0.002544 ** 
+SEX2:WLV100  -0.096257   0.038110  -2.526             0.011543 *  
+---
+Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 57790  on 98158  degrees of freedom
+Residual deviance: 49829  on 98146  degrees of freedom
+AIC: 49855
+
+Number of Fisher Scoring iterations: 6
+
+
+===========THE END ========================================
